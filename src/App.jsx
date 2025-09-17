@@ -2,28 +2,42 @@ import "./App.css"
 import { useState } from "react"
 import { menuItems } from "../Menu"
 import { Order } from "./components/TableOrder.jsx"
+import { Header } from "./components/Header.jsx"
 import { nanoid } from "nanoid"
 
 export default function App() {
-  const [menu, setMenu] = useState(menuItems)
+  const menu = [...menuItems]
   const [orders, setOrders] = useState(() => tableOrders())
   const [kitchen, setKitchen] = useState(() => kitchenOutput())
+  const [text, setText] = useState("Bring orders to the table.")
+  const [reputation, setReputation] = useState(0)
+  
   
   /***** Check Condition *****/
+  console.log(`Reputation is: ${reputation}`)
 
-  let lockedMeals = [];
+  if(reputation === 20) {
+    setText("Game Won! This restaurant is the best in town!")
+  }
+
+  const lockedMeals = [];
   kitchen.map(meal => {
     meal.isLocked && lockedMeals.push(meal.name)
-    if (lockedMeals.length === 4) {
-      /*** When length reaches 4, change button text with "Send Orders?" and its onclick to this area, where check is made.****/
-
-      const check = lockedMeals.sort().toString() === orders.sort().toString()
-      check ? console.log("All items match!") : console.log("No match")
-
-      /*** If check is true, refresh the orders and kitchen. Add 5 to reputation and add a star. ****/
-      /*** If check is false, change main text with "ooops wrong order, you lost reputation!", refresh orders and kitchen****/
-    }
   })
+
+  function sendOrders() {
+    const copyOrders = [...orders]
+    const check = lockedMeals.sort().toString() === copyOrders.sort().toString()
+    if(check) {
+      setText("Amazing work! Keep going.")
+      setReputation(oldRep => oldRep += 5)
+    } else {
+      setText("Whoops, pay attention!")
+    }
+    setTimeout( _ => setText("Bring orders to the table."), 1500)
+    setOrders(tableOrders())
+    setKitchen(kitchenOutput())
+  }
 
   /***** Table ******/
 
@@ -35,7 +49,10 @@ export default function App() {
   }
 
   const displayOrders = orders.map(meal => 
-    <Order meal={meal}/>)
+    <Order 
+      key={nanoid()}
+      meal={meal}
+    />)
 
   /***** Kitchen ******/
 
@@ -73,7 +90,7 @@ export default function App() {
  
   return (
     <>
-      <header></header>
+      <Header />
 
       <main>
         <section className="leftSec">
@@ -82,7 +99,7 @@ export default function App() {
           </div>
           <div className="cheers">
             <p>
-              {"Amazing Work!"}
+              {text}
             </p>
           </div>
         </section>
@@ -95,9 +112,16 @@ export default function App() {
       </main>
 
       <footer>
+        {lockedMeals.length === 4 ? 
         <button 
-        onClick={changeKitchen}
-        className="mainButton">Refresh Kitchen</button>
+          onClick={sendOrders}
+          className="mainButton">Send Orders?
+        </button>        
+        : <button 
+          onClick={changeKitchen}
+          className="mainButton">Refresh Kitchen
+        </button>      
+        }
       </footer>
     </>
 
