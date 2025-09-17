@@ -11,7 +11,7 @@ export default function App() {
   const [orders, setOrders] = useState(() => tableOrders())
   const [kitchen, setKitchen] = useState(() => kitchenOutput())
   const [text, setText] = useState("Bring orders to the table.")
-  const [reputation, setReputation] = useState(0)
+  const [reputation, setReputation] = useState(15)
   
   
   /***** Check Condition *****/

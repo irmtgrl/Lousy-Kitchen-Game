@@ -5,7 +5,7 @@ export function Header({ rep, locked }) {
         backgroundColor: "#F9F5FF",
         height: "20px",
         width: "90%",
-        filter: "drop-shadow(0px 2px 1px rgba(0, 0, 0, 0.25))"
+        borderBottom: "1px solid #28262C"
     }
 
     const repGained = {
