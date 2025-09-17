@@ -6,8 +6,8 @@ header {
 
 main {
     background-color: #D4C2FC;
-    width: 70%;
-    height: 80%;
+    width: 60%;
+    height: 70%;
     display: flex;
 }
 
@@ -18,6 +18,15 @@ section {
     flex-direction: column;
     padding-top: 40px;
     padding-bottom: 40px;
+}
+
+button {
+    font-size: 1em;
+    flex-shrink: 1;
+}
+
+p{
+    margin: 0;
 }
 
 .leftSec {
@@ -45,11 +54,12 @@ section {
     display: flex;
     flex-direction: column;
     background-color: #F9F5FF;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 1vh;
     flex: 1;
     overflow: hidden;
+    padding: 0.5em 0;
 }
 
 .orders {
@@ -69,6 +79,11 @@ section {
     text-align: center;
     width: 90%;
     height: 15%;
+    overflow: scroll;
+}
+
+.cheers p {
+    margin: 0.7em 1em;
 }
 
 .mainButton {
@@ -77,6 +92,15 @@ section {
     padding: 1em 2em;
     border: none;
     position: relative;
-    top: -1.5em;
+    top: -3em;
     cursor: pointer;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 0.7em;
 }

@@ -4,6 +4,7 @@ import { menuItems } from "../Menu"
 import { Order } from "./components/TableOrder.jsx"
 import { Header } from "./components/Header.jsx"
 import { nanoid } from "nanoid"
+import { useEffect } from "react"
 
 export default function App() {
   const menu = [...menuItems]
@@ -16,9 +17,13 @@ export default function App() {
   /***** Check Condition *****/
   console.log(`Reputation is: ${reputation}`)
 
-  if(reputation === 20) {
-    setText("Game Won! This restaurant is the best in town!")
-  }
+  useEffect(() => {
+    if (reputation === 20) {
+      setText("You win! Refresh to play again.")
+      setOrders([])
+      setKitchen([])
+    }
+  }, [reputation])
 
   const lockedMeals = [];
   kitchen.map(meal => {
@@ -90,11 +95,15 @@ export default function App() {
  
   return (
     <>
-      <Header />
+      <Header 
+        rep={reputation}
+        locked={lockedMeals.length}
+      />
 
       <main>
         <section className="leftSec">
           <div className="orders">
+            <p>Orders</p>
             {displayOrders}
           </div>
           <div className="cheers">
@@ -106,6 +115,7 @@ export default function App() {
 
         <section className="rightSec">
           <div className="kitchen">
+            <p>Kitchen</p>
             {displayKitchen}
           </div> 
         </section>
